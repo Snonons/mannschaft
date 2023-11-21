@@ -17,7 +17,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-                "query": "query ($id: ID! = \"00000000-0000-0000-0000-000000000001\") {\r\n  mannschaft(id: $id) {\r\n    name\r\n    gruendungsjahr\r\n    spielerList() {\r\n        vorname\r\n        nachname\r\n    }\r\n    trainer {\n      vorname\n      nachname\n    }\n    }\r\n}",
+                "query": "query ($id: ID! = \"00000000-0000-0000-0000-000000000001\") {\r\n  mannschaft(id: $id) {\r\n    name\r\n    gruendungsjahr\r\n    spielerList {\r\n        vorname\r\n        nachname\r\n    }\r\n    trainer {\n      vorname\n      nachname\n    }\n    }\r\n}",
 								"variales": "{\r\n  \"id\": \"00000000-0000-0000-0000-000000000001\",\r\n  \"first\": 2\r\n}"
 							}
 						},
@@ -63,7 +63,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query {\r\n  find {\r\n    id\r\n    name\n    gruendungsjahr\n    spielerList(first: $first) {\n        vorname\n        nachname\n    }\n    trainer {\n      vorname\n      nachname\n}\r\n  }\r\n}",
+								"query": "query {\r\n  mannschaften {\r\n    id\r\n    name\n    gruendungsjahr\n    spielerList {\n        vorname\n        nachname\n    }\n    trainer {\n      vorname\n      nachname\n}\r\n  }\r\n}",
 								"variables": ""
 							}
 						},
@@ -77,7 +77,7 @@
 					"response": []
 				},
 				{
-					"name": "Vorhandener Name Karlsruher SC",
+					"name": "Vorhandener Name",
 					"event": [
 					],
 					"request": {
@@ -86,7 +86,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($name: String! = \"Karlsruher SC\") {\r\n  mannschaften(input: {name: $name})  {\r\n    id\r\n    name\n    gruendungsjahr\n    spielerList(first: $first) {\n        vorname\n        nachname\n    }\n    trainer {\n      vorname\n      nachname\n}\r\n  }\r\n}",
+								"query": "query ($name: String! = \"Karlsruher SC\") {\r\n  mannschaften(input: {name: $name})  {\r\n    id\r\n    name\n    gruendungsjahr\n    spielerList {\n        vorname\n        nachname\n    }\n    trainer {\n      vorname\n      nachname\n}\r\n  }\r\n}",
 								"variables": "{\r\n  \"name\": \"Karlsruher SC\"\r\n}"
 							}
 						},
@@ -111,52 +111,6 @@
 							"graphql": {
 								"query": "query ($name: String! = \"XY\") {\r\n  mannschaften(input: {name: $name})  {\r\n    id\r\n  }\r\n}",
 								"variables": "{\r\n  \"name\": \"XY\"\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{graphql_url}}",
-							"host": [
-								"{{graphql_url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Vorhandenes Gründungsjahr",
-					"event": [
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query ($gruendungsjahr: String! = \"1894, 7, 6\") {\r\n  mannschaften(input: {nachname: $nachname})  {\r\n    id\r\n    name\n    gruendungsjahr\n    spielerList(first: $first) {\n        vorname\n        nachname\n    }\n    trainer {\n      vorname\n      nachname\n }\r\n  }\r\n}",
-								"variables": "{\r\n  \"nachname \": \"a\"\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{graphql_url}}",
-							"host": [
-								"{{graphql_url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Nicht-vorhandenes Gründungsjahr",
-					"event": [
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query ($gruendungsjahr: String! = \"1234\") {\r\n  mannschaften(input: {nachname: $nachname})  {\r\n    id\r\n  }\r\n}",
-								"variables": "{\r\n  \"nachname\": \"Nichtvorhanden\"\r\n}"
 							}
 						},
 						"url": {
@@ -196,26 +150,6 @@
 				{
 					"name": "Neuer Mannschaft",
 					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.be.equal('application/json');\r",
-									"});\r",
-									"pm.test('Body mit der id', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    pm.expect(body.data.create.id).to.match(/^[\\da-f]{8}-[\\da-f]{4}-[\\da-f]{4}-[\\da-f]{4}-[\\da-f]{12}$/u);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
 					],
 					"request": {
 						"method": "POST",
@@ -223,7 +157,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation {\r\n  create(\r\n    input: {\r\n      nachname: \"Neuernachname-Graphql\"\r\n      email: \"neue.email.graphql@test.de\"\r\n      kategorie: 1\r\n      hasNewsletter: true\r\n      geburtsdatum: \"2022-01-31\"\r\n      homepage: \"https://test.de\"\r\n      geschlecht: WEIBLICH\r\n      familienstand: LEDIG\r\n      adresse: {\r\n        plz: \"11111\"\r\n        ort: \"Testort\"\r\n      }\r\n      umsaetze: [{\r\n        betrag: \"1\"\r\n        waehrung: \"EUR\"\r\n      }]\r\n      interessen: [SPORT, REISEN]\r\n    }\r\n  ) {\r\n    id\r\n  }\r\n}",
+								"query": "mutation {\r\n  create(\r\n    input: {\r\n      name: \"Name-Graphql\"\r\n      gruendungsjahr: \"1900-01-01\"\r\n       spielerList : [{\r\n        vorname: \"Test\"\r\n        nachname: \"Mustermann\"\r\n      }, {\n        vorname: \"TestII\"\n        nachname: \"Mustermann\"\n      }]\r\n      trainer: {\n        vorname: \"Marie-Louise\"\n        nachname: \"Eta\"\n      }\n      }\r\n  ) {\r\n    id\r\n  }\r\n}",
 								"variables": ""
 							}
 						},
@@ -239,34 +173,6 @@
 				{
 					"name": "Neuer Mannschaft mit ungültigen Daten",
 					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.be.equal('application/json');\r",
-									"});\r",
-									"pm.test('Body mit der id', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { data, errors } = body;\r",
-									"    pm.expect(data).to.be.an('object').that.is.empty;\r",
-									"    pm.expect(errors).to.be.an('array').that.has.length(4);\r",
-									"    errors.forEach(error => {\r",
-									"        const { path, extensions } = error;\r",
-									"        pm.expect(path).to.be.an('array').that.is.not.empty;\r",
-									"        pm.expect(path[0]).to.be.equal('input');\r",
-									"        pm.expect(extensions.classification).to.be.equal('BAD_REQUEST');\r",
-									"    });\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
 					],
 					"request": {
 						"method": "POST",
@@ -274,7 +180,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation {\r\n  create(\r\n    input: {\r\n      nachname: \"?!:\"\r\n      email: \"email\"\r\n      kategorie: 11\r\n      hasNewsletter: true\r\n      geburtsdatum: \"2022-01-31\"\r\n      homepage: \"https://acme.com\"\r\n      geschlecht: WEIBLICH\r\n      familienstand: LEDIG\r\n      adresse: {\r\n        plz: \"1\"\r\n        ort: \"Testort\"\r\n      }\r\n      umsaetze: [{\r\n        betrag: \"1\"\r\n        waehrung: \"EUR\"\r\n      }]\r\n      interessen: [SPORT, REISEN]\r\n    }\r\n  ) {\r\n    id\r\n  }\r\n}",
+                "query": "mutation {\r\n  create(\r\n    input: {\r\n      name: \"Name-Graphql\"\r\n      gruendungsjahr: \"!\"\r\n       spielerList : [{}]\r\n      trainer: {\n        vorname: \"Marie-Louise\"\n        nachname: \"!\"\n      }\n      }\r\n  ) {\r\n    id\r\n  }\r\n}",
 								"variables": ""
 							}
 						},

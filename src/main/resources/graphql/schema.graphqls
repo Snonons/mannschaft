@@ -42,7 +42,7 @@ input Suchkriterien{
 
 input MannschaftInput{
   name:String!
-  gruendungsjahr: String!
+  gruendungsjahr: String
   trainer: TrainerInput!
   spielerList: [SpielerInput!]
 }

@@ -49,10 +49,4 @@ public final class NotFoundException extends RuntimeException {
         id = null;
         this.suchkriterien = suchkriterien;
     }
-
-    NotFoundException() {
-        super("Keine Mannschaften gefunden.");
-        id = null;
-        suchkriterien = null;
-    }
 }
