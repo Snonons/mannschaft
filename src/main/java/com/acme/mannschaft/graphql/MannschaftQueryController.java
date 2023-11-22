@@ -1,18 +1,17 @@
 package com.acme.mannschaft.graphql;
 
 import com.acme.mannschaft.entity.Mannschaft;
-import com.acme.mannschaft.entity.Spieler;
 import com.acme.mannschaft.service.MannschaftReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
+
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import static java.util.Collections.emptyMap;
 
 @Controller
