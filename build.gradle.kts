@@ -295,7 +295,7 @@ dependencies {
 
     // https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#tooling-modelgen
     // https://docs.jboss.org/hibernate/orm/current/introduction/html_single/Hibernate_Introduction.html#generator
-    // build\generated\sources\annotationProcessor\java\main\com.acme.mannschaft\entity\Kunde_.java
+    // build\generated\sources\annotationProcessor\java\main\com.acme.mannschaft\entity\Mannschaft_.java
     annotationProcessor("org.hibernate:hibernate-jpamodelgen:${libs.versions.hibernateJpamodelgen.get()}")
 
     // Flyway unterstuetzt nur Oracle 21 in der lizenzpflichtigen Version: https://documentation.red-gate.com/fd/oracle-184127602.html
