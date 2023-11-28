@@ -29,7 +29,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.UUID;
 import static com.acme.mannschaft.rest.MannschaftGetController.ID_PATTERN;
 import static com.acme.mannschaft.rest.MannschaftGetController.REST_PATH;
@@ -46,20 +45,21 @@ class MannschaftWriteController {
     private static final String PROBLEM_PATH = "/problem/";
     private final MannschaftWriteService service;
     private final MannschaftMapper mapper;
+    private final UriHelper uriHelper;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     @Operation(summary = "Einen neuen Mannschaften anlegen", tags = "Neuanlegen")
     @ApiResponse(responseCode = "201", description = "Mannschaft neu angelegt")
     @ApiResponse(responseCode = "400", description = "Syntaktische Fehler im Request-Body")
     @ApiResponse(responseCode = "422", description = "Ungültige Werte vorhanden")
-    ResponseEntity<Void> post(@RequestBody final MannschaftDTO mannschaftDTO,
-                              final HttpServletRequest request) throws URISyntaxException {
+    ResponseEntity<Void> post(@RequestBody final MannschaftDTO mannschaftDTO, final HttpServletRequest request) {
 
         log.debug("post: {}", mannschaftDTO);
 
         final var mannschaftInput = mapper.toMannschaft(mannschaftDTO);
         final var mannschaft = service.create(mannschaftInput);
-        final var location = new URI(request.getRequestURL().toString()+"/"+mannschaft.getId());
+        final var baseUri = uriHelper.getBaseUri(request).toString();
+        final var location = URI.create(STR."\{baseUri}/\{mannschaft.getId()}");
         return created(location).build();
     }
 
