@@ -81,3 +81,4 @@ public class MannschaftGetController {
         return CollectionModel.of(models);
     }
 }
+//test
